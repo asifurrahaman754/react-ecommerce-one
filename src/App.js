@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import Feature from "./components/feature product";
+import Footer from "./components/footer";
+import Hero from "./components/Hero";
+import Latest from "./components/lastest Product";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Navbar/Sidebar";
+import Newsletter from "./components/Newsletter";
+import ProductDetails from "./components/product details";
+import ProductFilter from "./components/product filter";
+import Testimonial from "./components/testimonial";
+
+//context api
+import { NavContextProvider } from "./Context/NavContext";
+import { ProductFilterContextProvider } from "./Context/ProductFilterContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <NavContextProvider>
+          <Navbar />
+          <Sidebar />
+        </NavContextProvider>
+        <Switch>
+          <Route exact path="/">
+            <Hero />
+            <Feature />
+            <ProductFilterContextProvider>
+              <Latest />
+              <ProductFilter />
+            </ProductFilterContextProvider>
+            <Testimonial />
+            <Newsletter />
+          </Route>
+          <Route exact path="/product">
+            <ProductDetails />
+            <Newsletter />
+          </Route>
+        </Switch>
+        <Footer />
+      </Router>
+    </>
   );
 }
 
